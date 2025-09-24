@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /private
+
+User-agent: *
+Crawl-delay: 5
+
+Sitemap: https://www.grantzilla.org/sitemap.xml

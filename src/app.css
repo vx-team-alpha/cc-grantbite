@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@plugin '@tailwindcss/typography';
+@plugin "daisyui" {
+  /* Disable all other themes which forces the default theme created below. You can add a dark mode theme using daisyui if you like, and it will automatically use it when the user's system is in dark mode. Docs: https://daisyui.com/docs/themes/ */
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "saasstartertheme";
+  default: true; /* set as default */
+  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: light; /* color of browser-provided UI */
+  --color-primary: #39988b;
+  --color-primary-content: #fefbf6;
+  --color-secondary: #c7b9f8;
+  --color-secondary-content: oklch(95% 0 0);
+  --color-accent: #00968985;
+  --color-accent-content: #180042;
+  --color-neutral: #180042;
+  --color-neutral-content: #fefbf6;
+  --color-base-100: #fefbf6;
+  --color-base-200: #faedd6;
+  --color-base-300: oklch(92% 0.04 240);
+  --color-base-content: #000;
+  --color-info: oklch(70% 0.2 220);
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: #37d399;
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning: oklch(80% 0.25 80);
+  --color-warning-content: oklch(20% 0.05 80);
+  --color-error: #f77272;
+  --color-error-content: oklch(98% 0.01 30);
+
+  /* border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.5rem;
+
+  /* base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* border size */
+  --border: 1px;
+
+  /* effects */
+  --depth: 1;
+  --noise: 0;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+@theme {
+  --color-brand-light-blue: #effbff;
+  --color-brand-primary: #39988b;
+  --color-brand-primary-dark: #225b53;
+  --color-brand-gray: #555555;
+  --color-brand-light-gray: #a5a5a5;
+  --color-brand-light-orange: #fff5de;
+  --color-brand-dark-orange: #fab900;
+  --color-brand-purple: #6012df;
+  --color-brand-blue: #3965f5;
+  --color-brand-green: #00823c;
+  --color-brand-white: #fbfbfb;
+  --color-brand-border: #e3e3e3;
+  --font-oswald: "Oswald Variable", "sans-serif";
+  --font-exo: "Exo Variable", "sans-serif";
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --text-btn: 14px;
+  --text-tiny--line-height: 1.5rem;
+  --text-tiny--letter-spacing: -0.025rem;
+  --text-tiny--font-weight: 500;
+}
+/*
+  Tailwind CSS v4 Migration:
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  .app-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1286];
+  }
+  /* .active {
+    @apply !text-brand-dark-orange hover:!text-brand-primary;
+  } */
+
+  .text-h1 {
+    @apply text-[28px] tracking-tight sm:text-[40px];
+  }
+  .text-h2 {
+    @apply text-[22px] tracking-tight sm:text-[34px];
+  }
+  .text-body1 {
+    @apply text-[14px] tracking-tight sm:text-[18px] leading-8 sm:leading-14;
+  }
+  .text-body2 {
+    @apply text-[12px] tracking-tight sm:text-[16px];
+  }
+  .text-body3 {
+    @apply text-[12px] tracking-tight sm:text-[18px];
+  }
+  .text-body4 {
+    @apply text-[14px] tracking-tight sm:text-[16px];
+  }
+  .text-body5 {
+    @apply text-[10px] tracking-tight sm:text-[16px];
+  }
+
+  .text-body6 {
+    @apply text-[14px] tracking-tight sm:text-[18px];
+  }
+
+  .text-bodylg {
+    @apply text-[22px] tracking-tight sm:text-[45px] leading-8 sm:leading-18;
+  }
+  .txt-btn {
+    @apply text-[14px] sm:text-[18px];
+  }
+}
+body {
+  font-family: "Exo Variable", sans-serif !important;
+}
+
+/* a {
+  @apply text-gray-700 cursor-pointer hover:text-brand-primary;
+} */
+
+/* Hack to temporarily solve https://github.com/supabase/auth-ui/issues/219 */
+.authBtn {
+  @apply btn;
+}
+button[disabled].authBtn {
+  font-size: 0.001px;
+  filter: brightness(65%);
+}
+button[disabled].authBtn::before {
+  font-size: 14px;
+  content: "Loading...";
+  color: oklch(var(--pc));
+}
+
+.oswald {
+  font-family: "Oswald Variable", sans-serif;
+}
+
+.green-gradient {
+  background: linear-gradient(90deg, #00be57 0%, #01f371 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+/* Hide placeholder on focus */
+
+/* input[type="search"]:focus::placeholder {
+  color: transparent;
+} */
+
+.teal-gradient {
+  background: linear-gradient(90deg, #39988b 0%, #13322e 100%);
+}
+
+.funding-search-bg {
+  background-image:
+    url("/search-bg.svg"),
+    /* top layer */ linear-gradient(90deg, #39988b 0%, #13322e 100%); /* bottom layer */
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+.text-teal-gradient {
+  background: -webkit-linear-gradient(90deg, #39988b 0%, #13322e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media screen and (max-width: 640px) {
+  .cookieConsent__Button {
+    padding: 15px 20px !important;
+  }
+}
+
+/* CSS for app.css - Single class for animated placeholder */
+.animated-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-placeholder::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 1.2em;
+  background-color: currentColor;
+  animation: cursor-blink 1s infinite;
+  opacity: 0.7;
+}
+
+@keyframes cursor-blink {
+  0%,
+  50% {
+    opacity: 0.7;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Input field  */
+input.animated-placeholder::placeholder {
+  color: transparent;
+}
+
+input.animated-placeholder {
+  color: #6b7280; /* Placeholder-like color */
+}
+
+input.animated-placeholder:focus {
+  color: #111827; /* Normal text color when focused */
+}
+
+input.animated-placeholder:focus::after {
+  display: none; /* Hide cursor when input is focused */
+}
