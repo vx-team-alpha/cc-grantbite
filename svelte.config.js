@@ -14,7 +14,7 @@ const config = {
     // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
     // If your environment is not supported or you settled on a specific environment, switch out the adapter.
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
-    adapter: isNodeTarget ? adapter() : adapterAuto(),
+    adapter: adapter(),
     // allow up to 150kb of style to be inlined with the HTML
     // Faster FCP (First Contentful Paint) by reducing the number of requests
     inlineStyleThreshold: 150000,
