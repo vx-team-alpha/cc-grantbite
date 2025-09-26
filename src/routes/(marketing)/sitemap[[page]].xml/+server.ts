@@ -5,6 +5,40 @@ import { locales, localizeHref } from "$lib/paraglide/runtime"
 import { fetchAllWithBuilder } from "$lib/utils"
 import type { FundingProgramWithTranslation } from "$lib/db_translation_helper"
 
+import type { EntryGenerator } from "./$types"
+import { createClient } from "@supabase/supabase-js"
+import { PUBLIC_SUPABASE_URL } from "$env/static/public"
+import { PRIVATE_SUPABASE_SERVICE_ROLE } from "$env/static/private"
+
+const MAX_PER_PAGE = 17_100
+
+export const entries: EntryGenerator = async () => {
+  const supabase = createClient(
+    PUBLIC_SUPABASE_URL,
+    PRIVATE_SUPABASE_SERVICE_ROLE,
+    { auth: { persistSession: false } },
+  )
+  const { data, error } =
+    await fetchAllWithBuilder<FundingProgramWithTranslation>(
+      supabase,
+      (sb) =>
+        sb
+          .from("funding_translations")
+          .select("id,language,permalink,updated_at")
+          .order("id", { ascending: false })
+          .order("language")
+          .not("permalink", "is", null),
+      1000,
+    )
+  const total_count = data?.length || 0
+  const pages = Math.ceil(total_count / MAX_PER_PAGE)
+  const arr = Array.from({ length: pages }, (_, i) => ({
+    page: (i + 1).toString(),
+  }))
+  // console.log("[entries]", arr)
+  return arr
+}
+
 export const prerender = true
 
 function fixBaseEntry(url: string) {
@@ -19,7 +53,7 @@ function fixBaseEntry(url: string) {
   return url
 }
 
-export const GET: RequestHandler = async ({ locals }) => {
+export const GET: RequestHandler = async ({ locals, params }) => {
   const supabase = locals.supabaseServiceRole
 
   const excludeRoutePatterns = [
@@ -46,6 +80,14 @@ export const GET: RequestHandler = async ({ locals }) => {
           .not("permalink", "is", null),
       1000,
     )
+  console.log(
+    "[->params.page]",
+    params.page,
+    "->data length",
+    data?.length,
+    "pages size: ",
+    Math.ceil((data?.length || 1) / MAX_PER_PAGE),
+  )
 
   if (error || !data) {
     console.error("Error fetching permalinks for sitemap:", error)
@@ -101,7 +143,7 @@ export const GET: RequestHandler = async ({ locals }) => {
       return paths.map(({ path, ...rest }) => {
         if (path.startsWith("/funding/")) {
           const permalink = path.split("/")[2]
-          console.log("[permalink]->", permalink)
+          // console.log(`${params.page} [permalink]->`, permalink)
           const { id, language, updated_at } =
             funding_permalink_lookup[permalink]
           const links = funding_links[id]
@@ -138,22 +180,12 @@ export const GET: RequestHandler = async ({ locals }) => {
                 lang: "de",
                 path: fixBaseEntry(localizeHref(path, { locale: "de" })),
               },
-              {
-                lang: "es",
-                path: fixBaseEntry(localizeHref(path, { locale: "es" })),
-              },
-              {
-                lang: "pt",
-                path: fixBaseEntry(localizeHref(path, { locale: "pt" })),
-              },
-              {
-                lang: "fr",
-                path: fixBaseEntry(localizeHref(path, { locale: "fr" })),
-              },
             ],
           }
         }
       })
     },
+    page: params.page,
+    maxPerPage: MAX_PER_PAGE, // optional; defaults to 50_000
   })
 }
