@@ -1,12 +1,10 @@
-{
-	"name": "grantbite",
-	"account_id": "7b74bc49f0de35a5cea10ecc737c5955",
-	"main": "./.cloudflare/worker.js",
-	"site": {
-		"bucket": "./.cloudflare/public"
-	},
-	"build": {
-		"command": "npm run build"
-	},
-	"compatibility_date": "2021-11-12"
-}
+name = "grantbite"
+account_id = "7b74bc49f0de35a5cea10ecc737c5955"
+main = "./.cloudflare/worker.js"
+compatibility_date = "2021-11-12"
+
+[build]
+command = "npm run build"
+
+[assets]
+directory = ".svelte-kit/cloudflare"

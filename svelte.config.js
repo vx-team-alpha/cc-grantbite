@@ -6,7 +6,7 @@ import adapter from "@sveltejs/adapter-cloudflare"
 // Determine which adapter to use
 const isNodeTarget = process.env.DEPLOY_TARGET === "NODE"
 const websiteBaseUrl =
-  process.env.PUBLIC_WEBSITE_BASE_URL || "grantbyte.ccvxbeta.workers.dev"
+  process.env.PUBLIC_WEBSITE_BASE_URL || "https://www.grantzilla.org"
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
